@@ -1,5 +1,5 @@
 <details>
-  summary><h2>📸Screenshots</h2></summary>
+<summary><h2><strong>📸Screenshots</strong></h2></summary>
 <img width="1774" height="956" alt="image_2026-09-01_10-47-34" src="https://github.com/user-attachments/assets/9c5fd1e6-a475-4017-8c97-0ae629b3cc98" />
 <img width="1906" height="1023" alt="image" src="https://github.com/user-attachments/assets/54b15227-f983-4421-a26c-b6e6d452fa05" />
 <img width="1912" height="1033" alt="image" src="https://github.com/user-attachments/assets/b8c25fd5-0421-4271-9db1-af8afd4788a5" />
