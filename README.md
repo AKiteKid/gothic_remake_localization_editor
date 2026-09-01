@@ -4,6 +4,7 @@
 <img width="1906" height="1023" alt="image" src="https://github.com/user-attachments/assets/54b15227-f983-4421-a26c-b6e6d452fa05" />
 <img width="1912" height="1033" alt="image" src="https://github.com/user-attachments/assets/b8c25fd5-0421-4271-9db1-af8afd4788a5" />
 </details>
+
 ## Gothic 1 Remake .lcache Localization Editor
 
 An editor for .lcache localization files in Gothic 1 Remake.
