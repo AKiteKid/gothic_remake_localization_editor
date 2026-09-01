@@ -1,0 +1,77 @@
+# Editor Setup & Run Guide
+
+## 1. Install or Update Python
+
+This editor requires Python version 3.9 or newer (the current version is 3.14.7). If you have an older version installed (3.8, 3.7, or below), the application will crash or throw errors on startup.
+
+1. Go to the official website: https://python.org and click the big yellow **Download Python** button.
+2. Follow the installation steps for your operating system:
+   * **Windows**: Run the downloaded installer. If Python is already installed, click **Upgrade Now**. If it's a fresh setup, click **Install Now**. *CRITICAL*: At the bottom of the very first window, check the box that says **Add Python to PATH**. Wait for the setup to finish.
+   * **macOS**: Run the downloaded `.pkg` file. It will install the new version alongside your old one. To make sure the system uses the updated version, you must use the `python3` command in your terminal.
+   * **Linux**: Update your system packages via terminal:
+     
+     sudo apt update && sudo apt install python3 python3-pip
+
+3. Verification: Open Command Prompt (Windows) or Terminal (macOS/Linux) and type:
+   
+   python --version
+   
+   If that doesn't work, try `python3 --version`. If it prints `Python 3.9.x` or higher (like Python 3.12 / 3.14), you are ready.
+
+## 2. Open Terminal in the Project Folder
+
+*CRITICAL NOTE*: Make sure you are in the root project folder—this is the exact folder where the file `main.py` is located. (Sometimes zip extractors create a "folder inside a folder" structure, so double-check that you see `main.py` right away!)
+
+* **Windows (Option A - Fastest)**: Open the project folder containing `main.py`. Click on the address bar at the very top of the window (where it shows the folder path). Erase everything there, type `cmd`, and press **Enter**. A black console window will open.
+* **Windows (Option B - Alternative)**: Open the project folder containing `main.py`. Hold the **Shift** key on your keyboard and **Right-Click** on any empty space inside the folder. Select **"Open PowerShell window here"** or **"Open in Terminal"** from the menu.
+* **macOS / Linux**: Open the Terminal app. Type `cd ` (make sure to type a space after `cd`). Drag the project folder (the one containing `main.py`) from Finder/File Manager and drop it directly into the Terminal window. Press **Enter**.
+
+## 3. Install Required Libraries
+
+In the terminal window you just opened, type the following command and press **Enter**:
+
+    pip install PyQt6 pycryptodome
+
+If you get a "pip: command not found" or a similar error, run this instead:
+
+    python -m pip install PyQt6 pycryptodome
+
+*(On macOS/Linux, use python3 instead of python)*. Wait until the terminal shows a success message.
+
+## 4. Run the Editor
+
+In the same terminal window, type:
+
+    python main.py
+
+*(On macOS/Linux: `python3 main.py`)*. The editor window will appear.
+
+If the app asks for JSON files on startup, simply point it to the `json` folder located inside the project directory. Click the **Import** button, select your `.lcache` file, and start editing.
+
+## 5. Optional: Create a Standalone Executable (.exe)
+
+If you want to launch the editor without opening the terminal every time, or if you want to share it with a friend who doesn't have Python installed:
+
+1. In the project terminal, install the builder tool:
+   
+   pip install pyinstaller
+
+2. Run the build command for your OS:
+   * **For Windows**:
+     
+     pyinstaller --onefile --windowed --add-data "core;core" --add-data "modules;modules" --add-data "json;json" --name "GothicEditor" main.py
+     
+   * **For macOS / Linux** (uses `:` as a separator instead of `;`):
+     
+     pyinstaller --onefile --windowed --add-data "core:core" --add-data "modules:modules" --add-data "json:json" --name "GothicEditor" main.py
+
+After a few minutes, a new folder named `dist` will appear in your project directory. Inside it, you will find the standalone GothicEditor app. You can move this file anywhere—it runs completely on its own.
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `ModuleNotFoundError: No module named 'Crypto'` | Run `pip install pycryptodome` again. |
+| `ModuleNotFoundError: No module named 'PyQt6'` | Run `pip install PyQt6` again. |
+| Error regarding `dialog_context_plugin` | You accidentally moved or deleted the `modules` folder. It must remain in the same directory alongside `main.py`. |
+| The data table inside the editor is empty | The program doesn't automatically load files on startup. You must click the **Import** button and manually open your `.lcache` file. |

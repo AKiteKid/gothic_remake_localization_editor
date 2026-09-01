@@ -1,0 +1,34 @@
+# Description
+A portable editor for *.lcache* localization files in Gothic 1 Remake. This tool was created to eliminate the need for manual editing in hex editors. The program works directly with the file in RAM (In-Memory), processing the internal structure of the format.
+**Beta version:** it is highly recommended to make backup copies of the original files before use.
+
+# Installation
+No installation required. The program is fully portable, just run the executable file.
+
+# Main features
+* **Full .lcache parsing and rebuilding:** Handles native structures with correct internal AES encryption.
+* **Dialogue Tree Workspace:** Interactive hierarchy view that maps flat translation strings into structured dialogue flows.
+* **Automated encoding management:** Automatically switches to UTF-16LE if any non-ASCII characters (Cyrillic, Umlauts) are detected to prevent broken characters. Pure Latin strings are saved in compact UTF-8.
+* **Auto-sync of translations:** Updating a translation automatically changes the text across all related duplicate keys with suffixes (_new, _newer, _v3, _v2, _patch).
+* **Action history:** Centralized undo and redo manager (Ctrl+Z / Ctrl+Y).
+* **Search and filtering:** Full-text search and quick filters to isolate or hide specific strings.
+* **Standalone UI Localization:** The editor interface can be fully translated into English, Russian, Polish, German, French, or Spanish via the toolbar button.
+* **Settings retention (settings.ini):** Remembers the selected theme (including dark and warm modes), layout preferences, and column widths.
+* **Status indication:** Displays total keys, translation completion percentage, and unsaved changes tracking.
+
+# What it CANNOT (and will not) do:
+* Add new text keys or inject entirely new languages into the file.
+* Work with games other than Gothic 1 Remake.
+* Fix developers' skill issues.
+* Prevent you from accidentally breaking your own text or making typos.
+* Serve as an example of perfect code.
+
+# Requirements
+* **Operating System:** Windows 10 / Windows 11 (64-bit) or Linux (64-bit distributions via Proton/Wine).
+* Does not require Python setup or third-party libraries.
+* Supports file paths containing Cyrillic characters and spaces.
+* When saving, the old file is automatically renamed to *.bak* to prevent data loss.
+* Application errors and crashes are cleanly logged into *error_log.txt* next to the executable.
+
+# Credits
+Thanks to dh0er for parsing the file format and providing the basic layout.

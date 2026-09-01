@@ -1,0 +1,60 @@
+# Changelog
+
+## 0.5
+* [Fix] Critical UI Signal Recursion Loop: Resolved a fatal cyclical interface crash where editing a node in the Dialogue Tree caused an infinite signal echo loop with the main grid table. Programmatic data updates are now safely sandboxed.
+* [Fix] Focused Grid Navigation Stability: Fixed a focus-loss bug where clicking a table row or shifting values forcefully stripped focus away from the grid. Navigation focus now securely locks onto the table view, allowing translators to use Tab to rapidly cycle straight downward through translation keys.
+* [Fix] Reference Lock Mechanism State: Fixed a visual state mismatch where the Source Text (Reference) field was unlocked by default. The lock icon now correctly scales with current dark/light UI color configurations and initiates in a safe, read-only state.
+* [Fix] Interface Status Clipping: Resolved a layout clipping error for the application status bar by adjusting fixed bounding heights, completely preventing text truncating during massive file operations.
+* [Improvement] Targeted Cell-by-Cell Selection: Reworked the main string table selection behavior from full-row highlight to precise single-item targeting. Visual focus is now locked strictly to the specific cell under translation, eliminating distracting bright rows.
+* [Improvement] Non-Intrusive Workspace Layout Management: Switching to the Dialogue Tree workspace automatically collapses the bottom editing fields (Reference, Target Editor, and Metapads), maximizing vertical screen space for massive conversation graphs.
+* [Improvement] Multi-Line Inline Editors: Upgraded the table's inline cell editing delegate from a single-line input to an expandable text field. This fully preserves native line breaks (\n) for long narrative blocks and multi-line character dialogue directly inside the table grid.
+* [Improvement] Streamlined Language Selection Menus: Cleaned up the Source and Target selection interfaces by filtering out duplicate entries caused by engine-specific file suffixes (_newer, _patch, _v3). Only clean, human-readable language options are now displayed.
+* [Improvement] Cohesive UI Theme Rendering: Fixed global QSS layout styles to resolve a critical layout issue where tab borders, document frames, and inner dialogue panels fell back to default Windows gray instead of seamlessly blending into the Warm Light theme backgrounds.
+* [Feature] Interactive Dialogue Tree: Introduced a comprehensive "Dialogue Tree" workspace alongside the traditional String Table. The system automatically maps flat translation keys to complex dialogue structures using internal index data. Translators can now view the entire conversation hierarchy, follow multi-branch storyline flows, and inspect contextual relationships between lines in real-time.
+* [Feature] Dynamic Dialogue Text Editing: Enabled full translation editing directly inside the Dialogue Tree structure. Modifying a character's reply inside the tree instantly updates the underlying database, recalculates completion statistics, sets change tracking flags, and synchronizes with the main string table layout.
+
+## 0.4a
+* [Fix] Cursor Jumps & Mirroring Resolved: Programmatically setting text now properly wraps with blockSignals, completely eliminating caret resets, typing reversals, and mirrored inputs.
+* [Fix] Native Text Field Navigation: The input cursor now dynamically shifts to the end of the text string when a row is opened, maintaining a stable position during active typing.
+* [Fix] Context‑Aware Undo System: Enabled synchronized character‑by‑character local history via setUndoRedoEnabled, while the global QUndoStack safely manages whole-table state integrity.
+* [Fix] Editor Control Input Flow: Resolved cyclic interface signal recursion, ensuring native behavior for standard Backspace, Delete, and rapid keypress sequences.
+* [Fix] Memory Leak Resolved: closeEvent now forces proper thread termination and cleanup for load_thread, preventing silent background leaks.
+* [Fix] Resize Loop Bug: Fixed an infinite layout cycle by correctly blocking signals on the table header view instead of the table widget container.
+* [Improvement] Fixed Scrollbar Colors: Scrollbars now properly adapt to the selected theme (dark/warm/light), eliminating the default white layout in dark mode.
+* [Improvement] TSV Format for CSV Operations: Switched the delimiter from comma to tab (\t) for CSV export and import. Commas inside translation texts no longer break the CSV file structure.
+* [Improvement] Undo/Redo Performance: Introduced centralized QUndoStack history management with an internal _bulk_update lock state, ensuring status stats recalculate only after mass operations finish.
+* [Improvement] Undo Logic Optimization: When clicking a cell in the Target column, the change tracking loop is now restricted only to keys with the same base name (via get_base_key), significantly boosting performance on massive files with tens of thousands of rows.
+* [Improvement] Streamlined Window Geometry: Eliminated a redundant outer layout hierarchy layer, removing unwanted inner border padding and margins.
+* [Improvement] Cohesive Theme Rendering: Fixed global QSS stylesheet bugs to ensure flawless visual integration across all active interface color schemes.
+* [Feature] Independent Source Language Selection: Introduced the ability to select any language as the source (base) reference instead of being locked to English. The "Choose Language" menu now features two submenus ("Source Language" and "Target Language"), enabling independent selection. Table column headers update dynamically based on your choice.
+
+## 0.3a
+* [Fix] Clear modified_keys on Save: the list of edited rows is reset after a successful .lcache export to ensure filters reflect the current state.
+* [Fix] Optimized Undo History: history stack commits now trigger only when switching the edited row rather than on every keystroke, preventing stack overflow and discarding useful edits (applies to both translation and original columns).
+* [Fix] Atomic File Saving: writing to .lcache is now performed via a temporary file with subsequent renaming, guaranteeing the original file remains undamaged in case of a crash.
+* [Fix] Isolated Editor Undo: disabled the native undo history in QTextEdit to avoid conflicts with the application's global Undo/Redo system.
+* [Fix] Removed unused variable: eliminated the obsolete _editing_key_id to clean up the codebase.
+* [Improvement] Restricted Cell Editing: cells in the Translation column are no longer editable directly – all edits must be made via the bottom text editor to ensure accurate Undo/Redo tracking.
+* [Improvement] CSV Import Confirmation: added an explicit warning that CSV imports cannot be reverted via Undo, requiring user confirmation.
+* [Improvement] Optimized CSV Import Process: replacing full table rebuilds with simple filter updates after CSV import to speed up performance and remove redundant updates.
+* [Improvement] update_translation_for_key Refactoring: the function no longer modifies the Undo/Redo stack directly; it now only updates data and returns a changelist, leaving history management to the caller logic to simplify code and prevent conflicts.
+* [Improvement] macOS‑style Window Controls: replaced square buttons with round buttons for minimize, maximize, and close. They are placed on the right side (Windows order: minimize, maximize, close) and use traffic‑light colors (green, yellow, red) that adapt to the selected theme.
+* [Improvement] Theme‑aware Window Border: the window border now changes color (2px solid) together with the active theme (dark/warm/light), providing a seamless visual integration.
+* [Improvement] Title Bar Background: the title bar background now follows the active theme, ensuring a cohesive appearance across all color schemes.
+* [Improvement] General UI Optimization: refactored widget layouts and rendering filters to enhance interface responsiveness and stability under heavy data loads.
+* [Feature] Translation Synchronization: modifying a translation now updates all keys with the same base_key (including _newer, _new, _v3, _v2, _patch suffixes). Changes apply to all linked rows rather than just the selected one.
+* [Feature] Group Undo/Redo: undo and redo actions now work for the entire set of affected keys instead of a single key.
+
+## 0.2a
+* [Fix] Fixed a fatal encoding extraction typo in update_translation_for_key (crash caused by a tuple vs string mismatch).
+* [Fix] Fixed table de-synchronization via a forced flattened_data refresh immediately after any CSV import.
+* [Improvement] Optimized dark mode theme color palette for higher text contrast and reduced eye strain during long sessions.
+* [Improvement] Persistent state saving: all 4 new checkbox states and settings are now saved in settings.ini.
+* [Improvement] Refactored layout architecture for widescreen monitors.
+* [Feature] CSV Import/Export Bridge: Added support for exporting and importing translations in Excel/LibreOffice compatible CSV format (; delimiter). Features per-language export and secure import with confirmation.
+* [Feature] Advanced Multi-Filters: Single checkbox replaced with four options: Hide Empty (hides untranslated rows), Hide Edited (hides user-edited rows), Show Only Empty (displays only empty rows), and Show Only Edited (displays only edited rows for rapid proofreading).
+* [Feature] Visibility Stats Counter: Real-time tracking of visible/hidden row count implemented directly under the checkboxes.
+* [Feature] UI Dropdown Menus: All input/output tasks grouped into clean [Import] and [Export] dropdown menus (.lcache & CSV operations).
+
+## 0.1a
+* Initial release
